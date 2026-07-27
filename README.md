@@ -1,3 +1,26 @@
+## SMarket Clone
+
+Smarkets API: https://api.smarkets.com/v0/control/openapi/
+
+#### Functional requirements:
+
+- Log-in: Users should be able to log into their Smarkets account. If you do not have one
+  yourself, go to https://smarkets.com/members/signup/ and create an account. If you have any personal circumstances preventing you from doing so, please reach out to the recruiter and requirements for this exercise can be adjusted.
+- Homepage: Users should see a homepage with various events and markets featured.
+  The markets displayed should have contracts with prices that update regularly.
+- Event page: Users can click on a specific event to see more details and more available markets.
+
+#### Implementation details:
+
+- You are free to pick the libraries and tools of your choice, but you should justify why you
+  picked them. The only technical requirement is that you use React.
+- You are free to use any AI coding tool to help you build the project.
+- You should not spend more than 6 hours on this exercise.
+- You should write a brief summary explaining your choices, challenges and technical
+  decisions, as well as how you would improve your project if you had additional time.
+
+🚀 Have fun! 🎉
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
