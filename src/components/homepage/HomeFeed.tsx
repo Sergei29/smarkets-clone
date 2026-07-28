@@ -4,9 +4,8 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
 import { getHomepageViewModel } from "@/lib/homepage/getHomepageViewModel"
 import { toSmarketsError } from "@/lib/smarkets/errors"
 import EventCard from "@/components/homepage/EventCard"
-import LiveMarketPrices, {
-  QuotesUpdatingIndicator,
-} from "@/components/markets/LiveMarketPrices"
+import LiveMarketPricesProvider from "@/providers/LiveMarketPricesProvider"
+import QuotesUpdatingIndicator from "@/components/markets/QuotesUpdatingIndicator"
 import type { FeaturedEvent } from "@/types"
 
 export const HomeFeedSkeleton = () => (
@@ -59,7 +58,7 @@ const HomeFeed = async () => {
   )
 
   return (
-    <LiveMarketPrices marketIds={marketIds}>
+    <LiveMarketPricesProvider marketIds={marketIds}>
       <div className="mb-2 flex justify-end">
         <QuotesUpdatingIndicator />
       </div>
@@ -73,7 +72,7 @@ const HomeFeed = async () => {
           </li>
         ))}
       </ul>
-    </LiveMarketPrices>
+    </LiveMarketPricesProvider>
   )
 }
 

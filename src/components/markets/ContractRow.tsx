@@ -1,6 +1,6 @@
 "use client"
 
-import { useContractQuote } from "@/components/markets/LiveMarketPrices"
+import { useLiveMarketPrices } from "@/providers/LiveMarketPricesProvider"
 import {
   bestBidPrice,
   bestOfferPrice,
@@ -8,13 +8,17 @@ import {
 } from "@/lib/smarkets/mappers"
 import type { FeaturedContract } from "@/types"
 
+type Props = { contract: FeaturedContract }
+
 /**
  * One contract's name plus its live bid/offer, read from the batched quote
- * poll via `useContractQuote`. Labelled conservatively ("Bid"/"Offer") rather
- * than back/lay until the exact upstream mapping is verified (see README).
+ * poll via `useLiveMarketPrices`. Labelled conservatively ("Bid"/"Offer")
+ * rather than back/lay until the exact upstream mapping is verified (see
+ * README).
  */
-const ContractRow = ({ contract }: { contract: FeaturedContract }) => {
-  const book = useContractQuote(contract.id)
+const ContractRow = ({ contract }: Props) => {
+  const { quotes } = useLiveMarketPrices()
+  const book = quotes?.[contract.id]
   const bid = formatDecimalOdds(bestBidPrice(book))
   const offer = formatDecimalOdds(bestOfferPrice(book))
 
