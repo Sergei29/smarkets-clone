@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import ThemeToggle from "@/components/layout/ThemeToggle"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,7 +12,10 @@ const AuthPagesLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <main className="flex min-h-full items-center justify-center p-4">
+    <main className="relative flex min-h-full items-center justify-center p-4">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
       {children}
     </main>
   )

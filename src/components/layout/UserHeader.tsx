@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react"
 import LogoutButton from "@/components/auth/LogoutButton"
+import ThemeToggle from "@/components/layout/ThemeToggle"
 
 /** App header: shows the safe profile (name/email) and the logout control. */
 const UserHeader = () => {
@@ -19,6 +20,7 @@ const UserHeader = () => {
         {displayName && (
           <span className="text-sm text-muted-foreground">{displayName}</span>
         )}
+        <ThemeToggle />
         <LogoutButton />
       </div>
     </header>
