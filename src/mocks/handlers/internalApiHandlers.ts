@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw"
-import { quoteFixtures } from "../fixtures/quoteFixtures"
+import { quoteFixtures, quoteFixturesUpdated } from "../fixtures/quoteFixtures"
 import { logoutSuccessFixture } from "../fixtures/authFixtures"
 
 /**
@@ -36,6 +36,37 @@ export const internalQuotesRateLimitedHandler = http.get(
       { status: 429 },
     ),
 )
+
+/**
+ * Scenario: the upstream quote service is unavailable. Mirrors what
+ * `/api/smarkets/quotes` itself returns for a `503` upstream response
+ * (`SmarketsError.fromUpstream` maps it to the generic `upstream_error` code,
+ * client-facing status `502`) — see `src/lib/smarkets/errors.ts`.
+ */
+export const internalQuotesUnavailableHandler = http.get(
+  "/api/smarkets/quotes",
+  () =>
+    HttpResponse.json(
+      { error: "upstream_error", message: "Upstream error (503)" },
+      { status: 502 },
+    ),
+)
+
+/**
+ * Sequential quote handler factory for polling tests at the internal API
+ * boundary: the first request returns `quoteFixtures`, every request after
+ * that returns `quoteFixturesUpdated`. Call this per test via
+ * `server.use(createSequentialInternalQuotesHandler())` — each call creates a
+ * new closure-scoped counter so state never leaks across tests.
+ */
+export const createSequentialInternalQuotesHandler = () => {
+  let callCount = 0
+  return http.get("/api/smarkets/quotes", () => {
+    callCount += 1
+    const book = callCount === 1 ? quoteFixtures : quoteFixturesUpdated
+    return HttpResponse.json(book, { status: 200 })
+  })
+}
 
 /** Scenario: logout succeeds locally even though upstream invalidation failed. */
 export const internalLogoutUpstreamFailedHandler = http.post(
