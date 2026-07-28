@@ -108,3 +108,33 @@ export const quoteBookSchema = z.object({
 })
 
 export const quotesResponseSchema = z.record(z.string(), quoteBookSchema)
+
+// --- Auth: POST /v3/sessions/ (login) ---
+// HAR-confirmed body; success is 201. Only the fields we consume are modelled.
+// `refresh_token` is present only for auth-v2 sessions, hence optional.
+
+export const sessionResponseSchema = z.object({
+  token: z.string(),
+  factor: z.string(),
+  refresh_token: z.string().optional(),
+  stop: z.string().optional(),
+  verify: z.boolean().optional(),
+  created_social_member: z.boolean().optional(),
+})
+
+// --- Profile: GET /v0/users/current/info-without-rate/ ---
+// Nullability mirrors the live spec: `country`/`permitted_country`/`authenticated`
+// are required (country nullable); the rest are optional in the contract.
+
+export const profileSchema = z.object({
+  authenticated: z.boolean(),
+  id_slug: z.string().optional(),
+  member_id: z.number().int().optional(),
+  email: z.string().optional(),
+  given_name: z.string().nullish(),
+  family_name: z.string().nullish(),
+  country: z.string().nullable(),
+  currency: z.string().nullish(),
+  bet_permission: z.boolean().optional(),
+  permitted_country: z.boolean(),
+})

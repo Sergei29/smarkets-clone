@@ -10,7 +10,11 @@ const AuthPagesLayout = ({
 }: Readonly<{
   children: React.ReactNode
 }>) => {
-  return <div>{children}</div>
+  return (
+    <main className="flex min-h-full items-center justify-center p-4">
+      {children}
+    </main>
+  )
 }
 
 export default AuthPagesLayout

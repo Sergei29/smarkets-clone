@@ -1,14 +1,32 @@
 import type { Metadata } from "next"
-import type { PageProps } from "@/types"
+import { Suspense } from "react"
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card"
+import LoginForm from "@/components/auth/LoginForm"
 
-export const metadata: Metadata = {}
+export const metadata: Metadata = {
+  title: "Sign in — Smarkets",
+}
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const LoginPage = async ({ params, searchParams }: PageProps) => {
+const LoginPage = () => {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline text-center">Login Page</h1>
-    </>
+    <Card size="sm" className="w-full max-w-sm">
+      <CardHeader>
+        <CardTitle>Sign in</CardTitle>
+        <CardDescription>Log in to your Smarkets account</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {/* LoginForm reads `callbackUrl` via useSearchParams → needs Suspense. */}
+        <Suspense>
+          <LoginForm />
+        </Suspense>
+      </CardContent>
+    </Card>
   )
 }
 

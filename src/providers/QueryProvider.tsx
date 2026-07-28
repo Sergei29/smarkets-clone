@@ -40,10 +40,12 @@ const getQueryClient = () => {
   return browserQueryClient
 }
 
-export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
+const QueryProvider = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(getQueryClient)
 
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   )
 }
+
+export default QueryProvider
