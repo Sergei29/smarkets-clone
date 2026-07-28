@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useSession } from "next-auth/react"
 import LogoutButton from "@/components/auth/LogoutButton"
 import ThemeToggle from "@/components/layout/ThemeToggle"
@@ -15,7 +16,9 @@ const UserHeader = () => {
 
   return (
     <header className="flex items-center justify-between border-b px-4 py-3">
-      <span className="text-lg font-semibold">Smarkets</span>
+      <Link href="/" className="text-lg font-semibold">
+        Smarkets
+      </Link>
       <div className="flex items-center gap-3">
         {displayName && (
           <span className="text-sm text-muted-foreground">{displayName}</span>

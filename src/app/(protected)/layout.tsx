@@ -31,6 +31,7 @@ const UserAreaLayout = ({
   children: React.ReactNode
 }>) => {
   return (
+    /** TODO: Suspense to replace with loading.tsx and error.tsx pages  */
     <Suspense fallback={<div className="min-h-full" />}>
       <AuthedShell>{children}</AuthedShell>
     </Suspense>
