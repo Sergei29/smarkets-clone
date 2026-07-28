@@ -1,0 +1,59 @@
+echo '🛠️ ***************************************************************************** 🛠️\n'
+echo '\n 🏗️👷 Styling, testing and building your project before committing \n'
+echo '🛠️ ***************************************************************************** 🛠️\n'
+
+# Check Prettier standards
+echo 'Checking Prettier standards... 👀 👀 👀\n'
+npm run format:check ||
+(
+    echo ' \n🤢🤮🤢🤮 Formatting is not Good! 🤢🤮🤢🤮
+            Prettier Check Failed. Run `npm run format`, add changes and try commit again. \n';
+    false;
+)
+
+# Check ESLint standards
+echo 'Checking ESLint standards... 👀 👀 👀\n'
+npm run lint ||
+(
+        echo ' \n😤🏀👋😤 Get that thing out of here! 😤🏀👋😤
+                ESLint Check Failed. Make the required changes listed above, add changes, re-run `npm run lint` and try to commit again. \n'
+        false;
+)
+
+# Check TypeScript standards
+echo 'Checking TypeScript standards... 👀 👀 👀\n'
+npm run typecheck ||
+(
+    echo '\n 🤡😂❌🤡 Failed Type check. 🤡😂❌🤡
+            Make the changes required above. Re-run `npm run typecheck` to be sure, then try to commit again.\n'
+    false;
+)
+
+# Run all automated tests
+echo 'Running automated tests... ⚙️ ⚙️ ⚙️\n'
+npm run test ||
+(
+    echo '\n 💥😜❌🤡 Failed Automated Tests. 🤡😂❌💥😜
+            Make the changes required above. Re-run `npm run test` to be sure, then try to commit again.\n'
+    false;
+)
+
+# If everything passes... Now we can build
+echo '🛠️ ***************************************************************************** 🛠️\n'
+
+echo ' \n 🤔🤔🤔🤔... Alright, sit tight 🤞... Code looks good to me... Trying to build now. 🤔🤔🤔🤔\n'
+
+echo '🛠️ ***************************************************************************** 🛠️\n'
+
+npm run build ||
+(
+    echo ' \n❌👷🔨❌ The application build has failed ❌👷🔨❌
+            Next build failed: View the errors above to see why.
+    \n'
+    false;
+)
+
+# If everything passes... Now we can commit
+echo '🛠️ ***************************************************************************** 🛠️\n'
+echo '✅✅✅✅ Good man! You win this time... I am committing this now. ✅✅✅✅\n'
+echo '🛠️ ***************************************************************************** 🛠️ \n'

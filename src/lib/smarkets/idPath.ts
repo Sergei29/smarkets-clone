@@ -20,7 +20,10 @@ export const ID_LIMITS = {
 const ID_PATTERN = /^\d+$/
 
 /** Numeric-string comparator; safe beyond `MAX_SAFE_INTEGER`. Reused by homepage selection ordering. */
-export const compareNumericStrings = (numericA: string, numericB: string): number => {
+export const compareNumericStrings = (
+  numericA: string,
+  numericB: string,
+): number => {
   if (numericA === numericB) return 0
   return BigInt(numericA) < BigInt(numericB) ? -1 : 1
 }
