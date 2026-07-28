@@ -21,6 +21,33 @@ Smarkets API: https://api.smarkets.com/v0/control/openapi/
 
 🚀 Have fun! 🎉
 
+## API contract verification (Phase 0)
+
+Verified against the live OpenAPI 3.0.2 document at
+`https://api.smarkets.com/v0/control/openapi/` (a 2.5&nbsp;MB inline JSON spec)
+by inspecting the operation objects directly. Findings:
+
+| Item                         | Result                                                                                                                                                                                                                                                                                                                                                                                        |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Login method**             | `POST /v3/sessions/` **confirmed** by the operation object (the endpoint exposes `post` + `delete`, no `get`). The OpenAPI intro text that links login as `GET /v3/sessions/` is misleading — resolved in favour of **POST**.                                                                                                                                                                 |
+| **Login request body**       | Only `username` + `password` are `required`. Optional: `create_social_member`, `remember`, `reopen_account`, `use_auth_v2` (all boolean). The HAR-confirmed body in `TASK.md` is valid. Note: `refresh_token` is an auth-v2 feature — send `use_auth_v2: true` if a refresh token is needed. (The `mode: "header"\|"cookie"` field belongs to the older `/v0/sessions/` variant, **not** v3.) |
+| **Logout**                   | `DELETE /v0/sessions/current/` exists (used by `TASK.md`). `DELETE /v3/sessions/` also exists; `/v3/sessions/current/` only supports `PUT`.                                                                                                                                                                                                                                                   |
+| **Path-array serialisation** | `{market_ids}`/`{event_ids}` are `path` params typed `array<integer>`, `uniqueItems: true`, default `simple` style → **comma-joined** in the path segment (e.g. `/v3/markets/1,2,3/quotes/`). Limits: quotes `maxItems: 200`, contracts `100`.                                                                                                                                                |
+| **Quote response shape**     | Object **keyed by contract ID** → `{ bids: [{ price, quantity }], offers: [{ price, quantity }] }`. `price` is in **percentage basis points** (spec example `5000`), confirming `decimalOdds = 10_000 / price` (`5000` → `2.0`). `quantity` is the summed pot.                                                                                                                                |
+| **v3 resource model**        | All MVP endpoints present: `/v3/events/`, `/v3/events/{event_ids}/`, `/v3/events/{event_ids}/markets/`, `/v3/markets/{market_ids}/contracts/`, `/v3/markets/{market_ids}/quotes/`, plus optional `last_executed_prices/`, `volumes/`, `{event_ids}/states/`, `{event_ids}/competitors/`.                                                                                                      |
+
+**Deferred — needs one live authenticated call (blocked: credentials are
+form-only and not available at scaffold time):**
+
+- Confirming the exact `Authorization: Session-Token <token>` follow-up header on
+  an authenticated request (sanitised HAR may omit it).
+- Determining the definitive **back/lay** display mapping of `bids`/`offers`.
+  Until verified, bid/offer are labelled conservatively per `TASK.md`.
+
+This does not block mock-driven UI development, per the Phase 0 rule.
+
+## This project
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
