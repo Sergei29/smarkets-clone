@@ -22,13 +22,17 @@ export const getSmarketsProfile = (token: string): Promise<SmarketsProfile> =>
  * contract but always present for an authenticated user; their absence means we
  * cannot build a session, so we surface a validation error rather than coerce.
  */
-export const toSessionUser = (profile: SmarketsProfile): SmarketsSessionUser => {
+export const toSessionUser = (
+  profile: SmarketsProfile,
+): SmarketsSessionUser => {
   if (
     profile.id_slug === undefined ||
     profile.member_id === undefined ||
     profile.email === undefined
   ) {
-    throw SmarketsError.validation("Profile is missing required identity fields")
+    throw SmarketsError.validation(
+      "Profile is missing required identity fields",
+    )
   }
 
   return {

@@ -4,7 +4,10 @@ import type { FeaturedEvent } from "@/types"
 import { getEvents } from "@/lib/smarkets/events"
 import { getMarketsByEventIds } from "@/lib/smarkets/markets"
 import { getContractsByMarketIds } from "@/lib/smarkets/contracts"
-import { selectFeaturedEvents, HOMEPAGE_EVENT_LIMIT } from "./selectFeaturedEvents"
+import {
+  selectFeaturedEvents,
+  HOMEPAGE_EVENT_LIMIT,
+} from "./selectFeaturedEvents"
 import { selectFeaturedMarket } from "./selectFeaturedMarket"
 import { buildHomepageViewModel } from "./buildHomepageViewModel"
 

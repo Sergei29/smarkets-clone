@@ -24,9 +24,7 @@ const ThemeToggle = () => {
       size="icon"
       aria-label="Toggle theme"
       disabled={!mounted}
-      onClick={() =>
-        setTheme(resolvedTheme === "dark" ? "light" : "dark")
-      }
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
       {mounted && resolvedTheme === "dark" ? (
         <Sun aria-hidden="true" />
