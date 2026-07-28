@@ -4,6 +4,9 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
 import { getHomepageViewModel } from "@/lib/homepage/getHomepageViewModel"
 import { toSmarketsError } from "@/lib/smarkets/errors"
 import EventCard from "@/components/homepage/EventCard"
+import LiveMarketPrices, {
+  QuotesUpdatingIndicator,
+} from "@/components/markets/LiveMarketPrices"
 import type { FeaturedEvent } from "@/types"
 
 export const HomeFeedSkeleton = () => (
@@ -47,17 +50,30 @@ const HomeFeed = async () => {
     )
   }
 
+  const marketIds = Array.from(
+    new Set(
+      events
+        .map((event) => event.market?.id)
+        .filter((id): id is string => id !== undefined),
+    ),
+  )
+
   return (
-    <ul
-      className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-      aria-label="Upcoming and live events list"
-    >
-      {events.map((event) => (
-        <li key={event.id} aria-label={event.name}>
-          <EventCard event={event} />
-        </li>
-      ))}
-    </ul>
+    <LiveMarketPrices marketIds={marketIds}>
+      <div className="mb-2 flex justify-end">
+        <QuotesUpdatingIndicator />
+      </div>
+      <ul
+        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        aria-label="Upcoming and live events list"
+      >
+        {events.map((event) => (
+          <li key={event.id} aria-label={event.name}>
+            <EventCard event={event} />
+          </li>
+        ))}
+      </ul>
+    </LiveMarketPrices>
   )
 }
 
