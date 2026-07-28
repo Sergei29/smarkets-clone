@@ -10,7 +10,7 @@ import { auth } from "@/lib/auth"
  *
  * `/api/*` is excluded from the matcher: API routes must not be redirected to
  * an HTML login page, and protected Route Handlers enforce `auth()` themselves
- * (defence in depth — never rely on the proxy alone).
+ * (defense in depth — never rely on the proxy alone).
  */
 export default auth((req) => {
   const { nextUrl } = req

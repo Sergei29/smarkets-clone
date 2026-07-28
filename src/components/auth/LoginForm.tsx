@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { signIn } from "next-auth/react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -40,6 +41,9 @@ const LoginForm = () => {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get("callbackUrl") ?? "/"
   const [formError, setFormError] = useState<string | null>(null)
+  const [passwordFieldType, setPasswordFieldType] = useState<
+    "text" | "password"
+  >("password")
 
   const {
     register,
@@ -63,6 +67,11 @@ const LoginForm = () => {
     router.push(callbackUrl)
     router.refresh()
   })
+
+  const togglePasswordFieldType = () =>
+    setPasswordFieldType((current) =>
+      current === "password" ? "text" : "password",
+    )
 
   return (
     <form onSubmit={onSubmit} noValidate>
@@ -90,13 +99,24 @@ const LoginForm = () => {
 
         <Field>
           <FieldLabel htmlFor="password">Password</FieldLabel>
-          <Input
-            id="password"
-            type="password"
-            autoComplete="current-password"
-            aria-invalid={Boolean(errors.password)}
-            {...register("password")}
-          />
+          <div className="relative">
+            <Input
+              id="password"
+              type={passwordFieldType}
+              autoComplete="current-password"
+              aria-invalid={Boolean(errors.password)}
+              {...register("password")}
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="absolute right-1 top-0 size-8 rounded-full"
+              onClick={togglePasswordFieldType}
+            >
+              {passwordFieldType === "password" ? <Eye /> : <EyeOff />}
+            </Button>
+          </div>
           <FieldError
             errors={errors.password ? [errors.password] : undefined}
           />
