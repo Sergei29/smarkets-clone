@@ -1,23 +1,25 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
+import HomeFeed, { HomeFeedSkeleton } from "@/components/homepage/HomeFeed"
 
-export const metadata: Metadata = {}
+export const metadata: Metadata = {
+  title: "Smarkets Home",
+  description: "Live event odds and markets on Smarkets.",
+}
 
-const HomePage = async () => {
+const HomePage = () => {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline text-center my-4">
-        Home page
+    <section
+      aria-labelledby="featured-events-heading"
+      className="mx-auto max-w-5xl p-4"
+    >
+      <h1 id="featured-events-heading" className="mb-4 text-2xl font-semibold">
+        Featured events
       </h1>
-      <p className="text-center">
-        Homepage: Users should see a homepage with various events and markets
-        featured. The markets displayed should have contracts with prices that
-        update regularly.
-      </p>
-      <p className="text-center">
-        Events: Users can click on a specific event to see more details and more
-        available markets.
-      </p>
-    </>
+      <Suspense fallback={<HomeFeedSkeleton />}>
+        <HomeFeed />
+      </Suspense>
+    </section>
   )
 }
 

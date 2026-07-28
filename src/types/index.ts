@@ -45,6 +45,28 @@ export type SmarketsProfile = z.infer<typeof profileSchema>
  * changing account values (balance, exposure). Shared by the profile mapper
  * and the `next-auth` module augmentation so there is a single source of truth.
  */
+/** Homepage view model — see `src/lib/homepage`. Composed server-side from the
+ * raw event/market/contract payloads; deliberately excludes fields the
+ * homepage doesn't render (slugs, market/contract types, display order). */
+export type FeaturedContract = {
+  id: string
+  name: string
+}
+
+export type FeaturedMarket = {
+  id: string
+  name: string
+  contracts: FeaturedContract[]
+}
+
+export type FeaturedEvent = {
+  id: string
+  name: string
+  state: string
+  startDatetime: string | null
+  market: FeaturedMarket | null
+}
+
 export type SmarketsSessionUser = {
   id: string
   memberId: number
