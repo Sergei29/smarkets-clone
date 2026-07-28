@@ -542,7 +542,6 @@ src/
       contracts.ts
       quotes.ts
       schemas.ts
-      types.ts
       errors.ts
       mappers.ts
       idPath.ts
@@ -572,6 +571,7 @@ src/
     testQueryClient.tsx
   types/
     next-auth.d.ts                  # Session/User/JWT augmentation
+    index.ts                        # reusable types
   instrumentation.ts
   proxy.ts                           # Auth.js route protection
 e2e/
