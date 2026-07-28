@@ -7,6 +7,7 @@ import {
   CardContent,
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import ContractRow from "@/components/markets/ContractRow"
 import type { FeaturedEvent } from "@/types"
 
 const EVENT_STATE_LABEL: Record<string, string> = {
@@ -42,12 +43,12 @@ const EventCard = ({ event }: Props) => (
         <div className="flex flex-col gap-2">
           <h3 className="text-sm font-medium">{event.market.name}</h3>
           <ul
-            className="flex flex-wrap gap-2"
+            className="flex flex-col gap-1"
             aria-label={`${event.market.name} contracts`}
           >
             {event.market.contracts.map((contract) => (
               <li key={contract.id}>
-                <Badge variant="outline">{contract.name}</Badge>
+                <ContractRow contract={contract} />
               </li>
             ))}
           </ul>

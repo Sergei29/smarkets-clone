@@ -489,7 +489,7 @@ Browser
 Apply these names consistently:
 
 - **React components and component files:** PascalCase, for example
-  `LoginForm.tsx`, `EventCard.tsx`, `LiveMarketPrices.tsx`.
+  `LoginForm.tsx`, `EventCard.tsx`, `LiveMarketPricesProvider.tsx`.
 - **Logic, utilities, hooks, schemas, fixtures and test helpers:** camelCase, for
   example `smarketsClient.ts`, `marketMappers.ts`, `useLiveQuotes.ts`,
   `testQueryClient.tsx`.
@@ -529,7 +529,6 @@ src/
     markets/
       MarketCard.tsx
       ContractRow.tsx
-      LiveMarketPrices.tsx
     layout/
       UserHeader.tsx
     ui/
@@ -565,6 +564,7 @@ src/
   providers/
     AppProviders.tsx                # SessionProvider + QueryClientProvider
     QueryProvider.tsx
+    LiveMarketPricesProvider.tsx
   test/
     setup.ts
     renderWithProviders.tsx
@@ -1077,7 +1077,7 @@ Tasks are ordered by dependency. Parallelise only genuinely independent work.
 
 - Build `/api/smarkets/quotes?marketIds=...`.
 - Validate and cap IDs before calling upstream.
-- Implement `LiveMarketPrices` using one batched TanStack Query.
+- Implement `LiveMarketPricesProvider` using one batched TanStack Query.
 - Format decimal odds.
 - Preserve prior data during refetch/failure.
 - Add subtle updating status without replacing content with a spinner.
