@@ -67,6 +67,17 @@ export type FeaturedEvent = {
   market: FeaturedMarket | null
 }
 
+/** Event-page view model — see `src/lib/event`. Same shape as `FeaturedEvent`
+ * but carries the broader `markets` list the event page shows, reusing
+ * `FeaturedMarket`/`FeaturedContract` rather than duplicating them. */
+export type EventDetails = {
+  id: string
+  name: string
+  state: string
+  startDatetime: string | null
+  markets: FeaturedMarket[]
+}
+
 export type SmarketsSessionUser = {
   id: string
   memberId: number

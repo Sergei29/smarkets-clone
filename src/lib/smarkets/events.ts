@@ -3,6 +3,7 @@ import "server-only"
 import type { SmarketsEvent } from "@/types"
 import { smarketsFetch } from "./smarketsClient"
 import { eventsResponseSchema } from "./schemas"
+import { buildIdPath, ID_LIMITS } from "./idPath"
 
 /**
  * GET /v3/events/ — homepage selection filters/limits the result further, but
@@ -23,4 +24,20 @@ export const getEvents = async (): Promise<SmarketsEvent[]> => {
     schema: eventsResponseSchema,
   })
   return events
+}
+
+/**
+ * GET /v3/events/{event_ids}/ for a single event id. The spec documents only a
+ * `200` response for this operation — an unknown id isn't a `404`, it just
+ * comes back filtered out of `events` — so "not found" is `events[0] ===
+ * undefined`, not a caught error (see README "API contract verification").
+ */
+export const getEventById = async (
+  eventId: string,
+): Promise<SmarketsEvent | undefined> => {
+  const path = buildIdPath([eventId], ID_LIMITS.events)
+  const { events } = await smarketsFetch(`/v3/events/${path}/`, {
+    schema: eventsResponseSchema,
+  })
+  return events[0]
 }

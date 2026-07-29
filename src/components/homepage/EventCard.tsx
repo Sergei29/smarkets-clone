@@ -18,7 +18,7 @@ const EVENT_STATE_LABEL: Record<string, string> = {
 type Props = { event: FeaturedEvent }
 
 const EventCard = ({ event }: Props) => (
-  <Card>
+  <Card className="grid grid-rows-subgrid row-span-2">
     <CardHeader>
       <CardTitle className="flex items-center justify-between gap-2">
         <h2 className="contents">
