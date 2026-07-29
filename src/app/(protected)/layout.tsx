@@ -32,6 +32,9 @@ const UserAreaLayout = ({ children }: PropsWithChildren) => {
   return (
     <QueryProvider>
       <UserHeader>
+        {/* AuthedProfileSlot's auth() call reads the session cookie — dynamic
+            data that Cache Components requires to sit inside a Suspense
+            boundary, or the build/dev server throws `blocking-route`. */}
         <Suspense fallback={<Skeleton className="h-4 w-20" />}>
           <AuthedProfileSlot />
         </Suspense>
