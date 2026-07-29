@@ -1,4 +1,4 @@
-import type { ReactElement, ReactNode } from "react"
+import type { ReactElement, PropsWithChildren } from "react"
 import { render, type RenderOptions } from "@testing-library/react"
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query"
 import { SessionProvider } from "next-auth/react"
@@ -13,10 +13,11 @@ type RenderWithProvidersOptions = RenderOptions & {
 
 /**
  * Render helper wrapping `ThemeProvider` + `SessionProvider` +
- * `QueryClientProvider` — the same provider composition as the root layout
- * (`src/app/layout.tsx`) and `src/providers/AppProviders.tsx`, but with an
- * isolated `QueryClient` per call. Returns the `queryClient` alongside RTL's
- * result so a test can inspect or clear it directly.
+ * `QueryClientProvider` — the full provider stack any component under test
+ * might need, mirroring the root layout (`src/app/layout.tsx`) and the
+ * `(protected)/layout.tsx` provider tree, but with an isolated `QueryClient`
+ * per call. Returns the `queryClient` alongside RTL's result so a test can
+ * inspect or clear it directly.
  */
 export const renderWithProviders = (
   ui: ReactElement,
@@ -26,7 +27,7 @@ export const renderWithProviders = (
     ...options
   }: RenderWithProvidersOptions = {},
 ) => {
-  const Wrapper = ({ children }: { children: ReactNode }) => (
+  const Wrapper = ({ children }: PropsWithChildren) => (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <SessionProvider session={session}>
         <QueryClientProvider client={queryClient}>
