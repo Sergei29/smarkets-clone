@@ -1102,6 +1102,7 @@ Tasks are ordered by dependency. Parallelise only genuinely independent work.
 - Configure a mock-enabled Next.js web server.
 - Add login, homepage, price-update and event-page journeys.
 - Add one degraded quote-response journey.
+- configure ci run for merge to main.
 
 ### Phase 10 — quality and documentation
 
