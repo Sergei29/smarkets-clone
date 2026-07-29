@@ -6,7 +6,7 @@ type Props = { market: FeaturedMarket }
 
 /** One market's name plus its ordered contracts — used by the event page's broader market list. */
 const MarketCard = ({ market }: Props) => (
-  <Card>
+  <Card className="w-full">
     <CardHeader>
       <CardTitle>{market.name}</CardTitle>
     </CardHeader>

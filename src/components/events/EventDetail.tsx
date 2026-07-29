@@ -91,11 +91,15 @@ const EventDetail = async ({ params }: Props) => {
         </p>
       ) : (
         <ul
-          className="grid gap-4 sm:grid-cols-2"
+          className="columns-1 gap-4 sm:columns-2"
           aria-label={`${event.name} markets`}
         >
           {event.markets.map((market) => (
-            <li key={market.id}>
+            <li
+              key={market.id}
+              aria-label={market.name}
+              className="mb-4 break-inside-avoid-column"
+            >
               <MarketCard market={market} />
             </li>
           ))}
