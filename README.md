@@ -70,6 +70,25 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+### Mock-enabled development
+
+Set `API_MOCKING=enabled` in `.env` (see `.env.example`) to run against MSW-mocked
+Smarkets responses instead of the real API. `API_MOCKING` is read once when the
+dev server boots (`src/instrumentation.ts`) — **restart `next dev` after
+changing it**; toggling it in `.env` while a server is already running has no
+effect until restarted.
+
+With mocking enabled, log in with:
+
+- Username: `test.user@example.com`
+- Password: `correct-horse-battery-staple`
+
+Any other credentials correctly return a `401 invalid credentials` error — the
+mock only recognises this one pair (see
+`src/mocks/fixtures/authFixtures.ts`). A second fixture account,
+`mfa.user@example.com` / `correct-horse-battery-staple`, exercises the
+unsupported-MFA error path instead of a successful login.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

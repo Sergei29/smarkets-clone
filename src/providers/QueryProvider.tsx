@@ -6,7 +6,7 @@ import {
   isServer,
 } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import { useState } from "react"
+import { useState, type PropsWithChildren } from "react"
 
 /** Extracts an HTTP status from an error, if one is present. */
 export const statusOf = (error: unknown): number | undefined => {
@@ -50,7 +50,7 @@ const getQueryClient = () => {
   return browserQueryClient
 }
 
-const QueryProvider = ({ children }: { children: React.ReactNode }) => {
+const QueryProvider = ({ children }: PropsWithChildren) => {
   const [queryClient] = useState(getQueryClient)
 
   return (
