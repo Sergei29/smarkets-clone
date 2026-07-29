@@ -16,6 +16,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run validate
+        env:
+          # CI-only signing secret for `npm run build` (src/lib/env.ts requires
+          # AUTH_SECRET to be set) — no `.env` file exists in CI, and this isn't
+          # tied to any real account, so a literal value here is fine.
+          AUTH_SECRET: "7f6d4563b7b3399589b74e6b8e50163c7c16e418994b11b60770d947a5ce4eab"
 
   e2e:
     name: Playwright E2E
