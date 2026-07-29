@@ -9,7 +9,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { useState } from "react"
 
 /** Extracts an HTTP status from an error, if one is present. */
-const statusOf = (error: unknown): number | undefined => {
+export const statusOf = (error: unknown): number | undefined => {
   if (error && typeof error === "object" && "status" in error) {
     const status = (error as { status: unknown }).status
     if (typeof status === "number") return status
@@ -17,16 +17,25 @@ const statusOf = (error: unknown): number | undefined => {
   return undefined
 }
 
+/**
+ * Do not hammer auth/rate-limit failures; retry other transient errors twice.
+ * Exported (rather than left inline) so this policy is directly unit-testable
+ * without going through a `QueryClient` instance.
+ */
+export const shouldRetryQuery = (
+  failureCount: number,
+  error: unknown,
+): boolean => {
+  const status = statusOf(error)
+  if (status && [401, 403, 429].includes(status)) return false
+  return failureCount < 2
+}
+
 const makeQueryClient = () =>
   new QueryClient({
     defaultOptions: {
       queries: {
-        // Do not hammer auth/rate-limit failures; retry transient errors twice.
-        retry: (failureCount, error) => {
-          const status = statusOf(error)
-          if (status && [401, 403, 429].includes(status)) return false
-          return failureCount < 2
-        },
+        retry: shouldRetryQuery,
         refetchOnWindowFocus: false,
       },
     },
