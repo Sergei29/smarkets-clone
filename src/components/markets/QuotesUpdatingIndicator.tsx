@@ -11,7 +11,7 @@ const QuotesUpdatingIndicator = () => {
       aria-live="polite"
       className="text-xs text-muted-foreground"
     >
-      {isFetching ? "Updating prices…" : " "}
+      {isFetching ? "🟢 Updating prices…" : " "}
     </span>
   )
 }

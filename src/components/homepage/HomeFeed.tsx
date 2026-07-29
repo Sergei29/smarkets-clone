@@ -59,7 +59,7 @@ const HomeFeed = async () => {
 
   return (
     <LiveMarketPricesProvider marketIds={marketIds}>
-      <div className="mb-2 flex justify-end">
+      <div className="mb-2 flex justify-end min-h-6.25">
         <QuotesUpdatingIndicator />
       </div>
       <ul
@@ -67,7 +67,11 @@ const HomeFeed = async () => {
         aria-label="Upcoming and live events list"
       >
         {events.map((event) => (
-          <li key={event.id} aria-label={event.name}>
+          <li
+            key={event.id}
+            aria-label={event.name}
+            className="grid row-span-2"
+          >
             <EventCard event={event} />
           </li>
         ))}
