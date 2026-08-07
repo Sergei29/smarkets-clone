@@ -5,7 +5,7 @@ import { useLiveQuotes } from "@/hooks/useLiveQuotes"
 import type { QuotesResponse } from "@/types"
 
 type LiveMarketPricesContextValue = {
-  quotes: QuotesResponse | undefined
+  quotes?: QuotesResponse
   isFetching: boolean
   isError: boolean
 }
