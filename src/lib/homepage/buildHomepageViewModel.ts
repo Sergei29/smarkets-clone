@@ -23,8 +23,7 @@ export const buildHomepageViewModel = (
     const marketContracts = market
       ? contracts
           .filter((contract) => contract.market_id === market.id)
-          .slice()
-          .sort(compareByDisplayOrder)
+          .toSorted(compareByDisplayOrder)
       : []
 
     return {

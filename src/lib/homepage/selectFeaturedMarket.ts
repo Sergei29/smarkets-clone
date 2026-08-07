@@ -21,5 +21,4 @@ export const selectFeaturedMarket = (
         !market.hidden &&
         FEATURABLE_MARKET_STATES.has(market.state),
     )
-    .slice()
-    .sort(compareByDisplayOrder)[0]
+    .toSorted(compareByDisplayOrder)[0]
