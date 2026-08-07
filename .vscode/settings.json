@@ -1,5 +1,5 @@
 {
-  "cSpell.ignorePaths": ["*.md"],
+  "cSpell.ignorePaths": ["*.md", "*.yml"],
   "cSpell.words": [
     "bettable",
     "Couldn",
