@@ -17,7 +17,7 @@ import type { SmarketsSessionUser } from "@/types"
  * root `next-auth` package: importing `next-auth` itself pulls in a
  * `next/server` dependency that Vitest's resolver can't load, which would make
  * this otherwise-pure module untestable. `next-auth` re-exports the identical
- * class from the same place, so this has no behavioural difference.
+ * class from the same place, so this has no behavioral difference.
  */
 export class InvalidCredentialsError extends CredentialsSignin {
   code = "invalid_credentials"
