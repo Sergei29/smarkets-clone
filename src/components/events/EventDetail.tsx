@@ -15,22 +15,40 @@ const EVENT_STATE_LABEL: Record<string, string> = {
   upcoming: "Upcoming",
 }
 
+const RowsSkeleton = ({ rows }: { rows: number }) =>
+  Array.from({ length: rows }, (_, index) => (
+    <Skeleton key={index} className="h-6.25 w-full" />
+  ))
+
 export const EventDetailSkeleton = () => (
   <div role="status" className="flex flex-col gap-4">
     <span className="sr-only">Loading event…</span>
-    <Skeleton className="h-8 w-2/3" />
+    <Skeleton className="h-13 w-2/3" />
     <div className="grid gap-4 sm:grid-cols-2">
-      {Array.from({ length: 4 }, (_, index) => (
-        <Card key={index} aria-hidden="true">
-          <CardHeader>
-            <Skeleton className="h-5 w-1/2" />
-          </CardHeader>
-          <CardContent className="flex flex-col gap-2">
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-full" />
-          </CardContent>
-        </Card>
-      ))}
+      <div className="flex flex-col gap-4">
+        {Array.from({ length: 2 }, (_, index) => (
+          <Card key={index} aria-hidden="true">
+            <CardHeader>
+              <Skeleton className="h-6.25 w-1/2" />
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2">
+              <RowsSkeleton rows={index === 0 ? 3 : 10} />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      <div className="flex flex-col gap-4">
+        {Array.from({ length: 2 }, (_, index) => (
+          <Card key={index} aria-hidden="true">
+            <CardHeader>
+              <Skeleton className="h-6.25 w-1/2" />
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2">
+              <RowsSkeleton rows={index === 0 ? 6 : 7} />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   </div>
 )
@@ -78,10 +96,10 @@ const EventDetail = async ({ params }: Props) => {
           )}
         </div>
         <div className="flex items-center gap-2">
+          <QuotesUpdatingIndicator />
           <Badge variant={event.state === "live" ? "default" : "secondary"}>
             {EVENT_STATE_LABEL[event.state] ?? event.state}
           </Badge>
-          <QuotesUpdatingIndicator />
         </div>
       </header>
 

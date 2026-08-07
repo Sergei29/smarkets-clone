@@ -21,5 +21,4 @@ export const selectDisplayableMarkets = (
         !market.hidden &&
         DISPLAYABLE_MARKET_STATES.has(market.state),
     )
-    .slice()
-    .sort(compareByDisplayOrder)
+    .toSorted(compareByDisplayOrder)
