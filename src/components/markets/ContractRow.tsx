@@ -26,8 +26,12 @@ const ContractRow = ({ contract }: Props) => {
     <div className="flex items-center justify-between gap-3 rounded-md border px-2 py-1 text-sm">
       <span>{contract.name}</span>
       <span className="flex gap-2 tabular-nums text-muted-foreground">
-        <span aria-label={`${contract.name} bid`}>B {bid}</span>
-        <span aria-label={`${contract.name} offer`}>O {offer}</span>
+        <span aria-label={`${contract.name} bid`} className="min-w-12.5">
+          B {bid}
+        </span>
+        <span aria-label={`${contract.name} offer`} className="min-w-12.5">
+          O {offer}
+        </span>
       </span>
     </div>
   )
