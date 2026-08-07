@@ -8,17 +8,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A take-home exercise cloning key Smarkets betting-exchange screens (login, homepage with live market prices, event detail page) against the real Smarkets API (`https://api.smarkets.com/v0/control/openapi/`). See `README.md` for the full brief. The project is a fresh `create-next-app` scaffold — most pages and every API route are still stubs (`throw new Error("Not implemented yet")`).
 
-## Commands
-
-```bash
-npm run dev      # start dev server (localhost:3000)
-npm run build    # production build
-npm run start    # run production build
-npm run lint     # eslint (flat config, eslint-config-next core-web-vitals + typescript)
-```
-
-There is no test runner configured yet. Formatting is via Prettier (`.prettierrc`: `semi: false`) — no separate `format` script, run `npx prettier --write .`.
-
 ## Read this before writing any code
 
 `node_modules/next/dist/docs/` is the authoritative doc set for the exact Next.js version pinned here (`16.2.12` — newer than this model's training data, with real breaking changes vs. the Next.js you know). Before implementing a feature, check the relevant guide there rather than assuming familiar Next.js behavior. Two changes in particular affect almost everything in this repo:

@@ -38,7 +38,7 @@ const buildHeaders = (
 ): HeadersInit => {
   const headers: Record<string, string> = {}
   if (hasBody) headers["Content-Type"] = "application/json"
-  // The token lives only in this header and is never logged.
+  /** The token lives only in this header and is never logged. */
   if (token) headers["Authorization"] = `Session-Token ${token}`
   return headers
 }
@@ -49,10 +49,20 @@ const logUpstreamFailure = (context: {
   code: string
   upstreamStatus?: number
 }): void => {
-  // Deliberately excludes headers, body and token.
+  /** Deliberately excludes headers, body and token. */
   console.error("[smarkets] upstream request failed", context)
 }
 
+/**
+ * @description Fetches a Smarkets API endpoint with:
+ * - structured error handling,
+ * - optional Zod validation, and timeout/abort support.
+ * - this function is server-only and should not be used in client-side code.
+ * @template T The expected type of the response data, inferred from the provided Zod schema.
+ * @param {string} path endpoint path, e.g. `/v3/sessions/`
+ * @param {object} params containing fetch options and optional Zod schema for response validation, timeout and abort signal
+ * @returns {Promise<T>} A promise that resolves to the parsed and validated response data of type T.
+ */
 export const smarketsFetch = async <T = unknown>(
   path: string,
   {
@@ -65,8 +75,12 @@ export const smarketsFetch = async <T = unknown>(
     cache = "no-store",
   }: SmarketsRequest<T> = {},
 ): Promise<T> => {
+  /** The AbortController is used to implement a timeout, and also to combine with any external abort signal. */
   const controller = new AbortController()
+  /** this is to handle our own timeout abort */
   const timeout = setTimeout(() => controller.abort(), timeoutMs)
+
+  /** 1. Handle the external abort signal, if provided. If the external signal is already aborted, we abort immediately. Otherwise, we listen for the 'abort' event and abort our internal controller when it occurs. The `{ once: true }` option ensures that the event listener is removed after it fires once, preventing memory leaks. */
   if (signal) {
     if (signal.aborted) controller.abort()
     else
@@ -74,6 +88,7 @@ export const smarketsFetch = async <T = unknown>(
   }
 
   let res: Response
+  /** 2. Fetch the upstream Smarkets API, with timeout and abort support. Any network error or timeout is wrapped in a structured SmarketsError. */
   try {
     res = await fetch(`${BASE_URL}${path}`, {
       method,
@@ -94,8 +109,14 @@ export const smarketsFetch = async <T = unknown>(
   }
 
   if (!res.ok) {
-    // Drain the body for connection reuse, but never surface it to the client.
+    /**
+     * Drain the body for connection reuse, but never surface it to the client.
+     * why?
+     * - so the current http request is fully completed,
+     * - then the current tcp/conn. can be reused for next requests,
+     */
     await res.text().catch(() => "")
+
     const error = SmarketsError.fromUpstream(res.status)
     logUpstreamFailure({
       method,
@@ -108,6 +129,10 @@ export const smarketsFetch = async <T = unknown>(
 
   if (res.status === 204) return undefined as T
 
+  /**
+   * 3. Parse the JSON response, with optional Zod validation.
+   * Any parsing or validation error is wrapped in a structured SmarketsError.
+   */
   let json: unknown
   try {
     json = await res.json()
@@ -136,5 +161,6 @@ export const smarketsFetch = async <T = unknown>(
       parsed.error,
     )
   }
+
   return parsed.data
 }
