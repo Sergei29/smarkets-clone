@@ -43,6 +43,7 @@ export default defineConfig({
       API_MOCKING: "enabled",
       AUTH_SECRET:
         "139d381774b712bcd2c8d7c97165299d5d973ae631701590644be2036b19bc75",
+      NEXT_PUBLIC_APP_NAME: "Smarkets Clone",
     },
     stdout: "pipe",
     stderr: "pipe",

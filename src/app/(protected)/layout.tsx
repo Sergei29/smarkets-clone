@@ -6,9 +6,15 @@ import { Skeleton } from "@/components/ui/skeleton"
 import QueryProvider from "@/providers/QueryProvider"
 import UserHeader from "@/components/layout/UserHeader"
 import UserDisplayName from "@/components/layout/UserDisplayName"
+import { env } from "@/lib/env"
 
 export const metadata: Metadata = {
-  title: "Smarkets",
+  title: {
+    template: `%s | ${env.NEXT_PUBLIC_APP_NAME}`,
+    default: "User Area",
+  },
+  description:
+    "Access your Smarkets account, manage your profile, and view your trading activity.",
 }
 
 /**
@@ -18,7 +24,7 @@ export const metadata: Metadata = {
  * narrow boundary (rather than wrapping the whole shell) so the static header
  * chrome and the page content below never wait on the cookie read.
  */
-async function AuthedProfileSlot() {
+const AuthedProfileSlot = async () => {
   const session = await auth()
 
   return (
