@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import HomeFeed, { HomeFeedSkeleton } from "@/components/homepage/HomeFeed"
 
 export const metadata: Metadata = {
-  title: "Smarkets Home",
+  title: "Home",
   description: "Live event odds and markets on Smarkets.",
 }
 

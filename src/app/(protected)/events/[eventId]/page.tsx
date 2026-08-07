@@ -6,7 +6,7 @@ import EventDetail, {
 import type { PageProps } from "@/types"
 
 export const metadata: Metadata = {
-  title: "Event — Smarkets",
+  title: "Event",
 }
 
 /**

@@ -9,9 +9,14 @@
     "sanitised",
     "TOTP"
   ],
+  "editor.inlineSuggest.enabled": false,
+  "continue.enableTabAutocomplete": false,
+  "continue.enableNextEdit": false,
+  "continue.showInlineTip": false,
   "github.copilot.enable": {
     "*": false
   },
   "github.copilot.inlineSuggest.enable": false,
+  "github.copilot.nextEditSuggestions.enabled": false,
   "codeium.enable": false
 }

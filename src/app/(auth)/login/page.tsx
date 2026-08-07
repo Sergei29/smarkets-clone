@@ -10,7 +10,7 @@ import {
 import LoginForm from "@/components/auth/LoginForm"
 
 export const metadata: Metadata = {
-  title: "Sign in — Smarkets",
+  title: "Sign in",
 }
 
 const LoginPage = () => {
