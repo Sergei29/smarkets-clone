@@ -26,8 +26,7 @@ export const buildEventViewModel = (
     name: market.name,
     contracts: contracts
       .filter((contract) => contract.market_id === market.id)
-      .slice()
-      .sort(compareByDisplayOrder)
+      .toSorted(compareByDisplayOrder)
       .map((contract) => ({ id: contract.id, name: contract.name })),
   })),
 })

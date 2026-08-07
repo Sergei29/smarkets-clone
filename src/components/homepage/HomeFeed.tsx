@@ -9,7 +9,7 @@ import QuotesUpdatingIndicator from "@/components/markets/QuotesUpdatingIndicato
 import type { FeaturedEvent } from "@/types"
 
 export const HomeFeedSkeleton = () => (
-  <div role="status" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  <div role="status" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-8">
     <span className="sr-only">Loading featured events…</span>
     {Array.from({ length: 6 }, (_, index) => (
       <Card key={index} aria-hidden="true">
@@ -19,7 +19,9 @@ export const HomeFeedSkeleton = () => (
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
           <Skeleton className="h-4 w-1/2" />
-          <Skeleton className="h-6 w-full" />
+          <Skeleton className="h-7.75 w-full" />
+          <Skeleton className="h-7.75 w-full" />
+          <Skeleton className="h-7.75 w-full" />
         </CardContent>
       </Card>
     ))}
@@ -49,6 +51,12 @@ const HomeFeed = async () => {
     )
   }
 
+  /**
+   * Purpose:
+   * - Extract market IDs
+   * - Remove the gaps (undefined) from the array,
+   * - Deduplicate by [...new Set(...)]
+   */
   const marketIds = Array.from(
     new Set(
       events

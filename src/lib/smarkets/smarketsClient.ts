@@ -32,10 +32,13 @@ export type SmarketsRequest<T> = {
   cache?: RequestCache
 }
 
-const buildHeaders = (
-  token: string | undefined,
-  hasBody: boolean,
-): HeadersInit => {
+const buildHeaders = ({
+  token,
+  hasBody,
+}: {
+  token?: string
+  hasBody: boolean
+}): HeadersInit => {
   const headers: Record<string, string> = {}
   if (hasBody) headers["Content-Type"] = "application/json"
   /** The token lives only in this header and is never logged. */
@@ -93,7 +96,7 @@ export const smarketsFetch = async <T = unknown>(
     res = await fetch(`${BASE_URL}${path}`, {
       method,
       cache,
-      headers: buildHeaders(token, body !== undefined),
+      headers: buildHeaders({ token, hasBody: body !== undefined }),
       body: body !== undefined ? JSON.stringify(body) : undefined,
       signal: controller.signal,
     })
