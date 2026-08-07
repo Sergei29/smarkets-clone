@@ -48,6 +48,9 @@ export async function register() {
   if (!isMockingEnabled) return
 
   const { server } = await import("./mocks/server")
+  const { logInterceptedRequests } = await import("./mocks/logRequests")
+
   server.listen(LISTEN_OPTIONS)
+  logInterceptedRequests(server.events, "node")
   keepAttachedAcrossRecompiles(server)
 }

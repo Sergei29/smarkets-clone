@@ -1,6 +1,13 @@
 {
   "cSpell.ignorePaths": ["*.md"],
-  "cSpell.words": ["bettable", "Couldn", "nums", "sanitised", "TOTP"],
+  "cSpell.words": [
+    "bettable",
+    "Couldn",
+    "nums",
+    "recompiles",
+    "sanitised",
+    "TOTP"
+  ],
   "github.copilot.enable": {
     "*": false
   },
