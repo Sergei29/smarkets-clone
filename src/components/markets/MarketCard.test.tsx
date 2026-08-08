@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { renderWithProviders } from "@/test/renderWithProviders"
-import LiveMarketPricesProvider from "@/providers/LiveMarketPricesProvider"
+import QuotesProvider from "@/providers/QuotesProvider"
 import type { FeaturedMarket } from "@/types"
 import MarketCard from "./MarketCard"
 
@@ -16,9 +16,9 @@ const matchOdds: FeaturedMarket = {
 
 const renderMarketCard = (market: FeaturedMarket) =>
   renderWithProviders(
-    <LiveMarketPricesProvider marketIds={[market.id]}>
+    <QuotesProvider marketIds={[market.id]}>
       <MarketCard market={market} />
-    </LiveMarketPricesProvider>,
+    </QuotesProvider>,
   )
 
 describe("MarketCard", () => {

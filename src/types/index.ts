@@ -39,12 +39,6 @@ export type QuotesResponse = z.infer<typeof quotesResponseSchema>
 export type SmarketsSession = z.infer<typeof sessionResponseSchema>
 export type SmarketsProfile = z.infer<typeof profileSchema>
 
-/**
- * Safe, client-visible user profile exposed through the Auth.js session.
- * Deliberately excludes the Smarkets session token, refresh token and any
- * changing account values (balance, exposure). Shared by the profile mapper
- * and the `next-auth` module augmentation so there is a single source of truth.
- */
 /** Homepage view model — see `src/lib/homepage`. Composed server-side from the
  * raw event/market/contract payloads; deliberately excludes fields the
  * homepage doesn't render (slugs, market/contract types, display order). */
@@ -78,6 +72,12 @@ export type EventDetails = {
   markets: FeaturedMarket[]
 }
 
+/**
+ * Safe, client-visible user profile exposed through the Auth.js session.
+ * Deliberately excludes the Smarkets session token, refresh token and any
+ * changing account values (balance, exposure). Shared by the profile mapper
+ * and the `next-auth` module augmentation so there is a single source of truth.
+ */
 export type SmarketsSessionUser = {
   id: string
   memberId: number

@@ -1,6 +1,6 @@
 "use client"
 
-import { useQuotesStatus } from "@/providers/LiveMarketPricesProvider"
+import { useQuotesStatus } from "@/providers/QuotesStatusProvider"
 
 /** Subtle, non-spinner "updating" status — reserves its own space to avoid layout shift. */
 const QuotesUpdatingIndicator = () => {
