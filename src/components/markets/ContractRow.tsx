@@ -1,6 +1,6 @@
 "use client"
 
-import { useLiveMarketPrices } from "@/providers/LiveMarketPricesProvider"
+import { useQuotesContext } from "@/providers/QuotesProvider"
 import {
   bestBidPrice,
   bestOfferPrice,
@@ -17,7 +17,7 @@ type Props = { contract: FeaturedContract }
  * README).
  */
 const ContractRow = ({ contract }: Props) => {
-  const { quotes } = useLiveMarketPrices()
+  const { quotes } = useQuotesContext()
   const book = quotes?.[contract.id]
   const bid = formatDecimalOdds(bestBidPrice(book))
   const offer = formatDecimalOdds(bestOfferPrice(book))

@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { renderWithProviders } from "@/test/renderWithProviders"
 import { advanceFakeTimers } from "@/test/advanceFakeTimers"
-import LiveMarketPricesProvider from "@/providers/LiveMarketPricesProvider"
+import QuotesProvider from "@/providers/QuotesProvider"
 import { server } from "@/mocks/server"
 import {
   createSequentialInternalQuotesHandler,
@@ -16,9 +16,9 @@ const QUOTES_POLL_INTERVAL_MS = 5_000
 
 const renderContractRow = (contractId: string, contractName: string) =>
   renderWithProviders(
-    <LiveMarketPricesProvider marketIds={["2001"]}>
+    <QuotesProvider marketIds={["2001"]}>
       <ContractRow contract={{ id: contractId, name: contractName }} />
-    </LiveMarketPricesProvider>,
+    </QuotesProvider>,
   )
 
 afterEach(() => {

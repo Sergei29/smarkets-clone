@@ -4,7 +4,8 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
 import { getHomepageViewModel } from "@/lib/homepage/getHomepageViewModel"
 import { toSmarketsError } from "@/lib/smarkets/errors"
 import EventCard from "@/components/homepage/EventCard"
-import LiveMarketPricesProvider from "@/providers/LiveMarketPricesProvider"
+import QuotesContextProvider from "@/providers/QuotesProvider"
+import QuotesStatusProvider from "@/providers/QuotesStatusProvider"
 import QuotesUpdatingIndicator from "@/components/markets/QuotesUpdatingIndicator"
 import type { FeaturedEvent } from "@/types"
 
@@ -66,9 +67,11 @@ const HomeFeed = async () => {
   )
 
   return (
-    <LiveMarketPricesProvider marketIds={marketIds}>
+    <QuotesContextProvider marketIds={marketIds}>
       <div className="mb-2 flex justify-end min-h-6.25">
-        <QuotesUpdatingIndicator />
+        <QuotesStatusProvider marketIds={marketIds}>
+          <QuotesUpdatingIndicator />
+        </QuotesStatusProvider>
       </div>
       <ul
         className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
@@ -84,7 +87,7 @@ const HomeFeed = async () => {
           </li>
         ))}
       </ul>
-    </LiveMarketPricesProvider>
+    </QuotesContextProvider>
   )
 }
 

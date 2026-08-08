@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { screen, waitFor } from "@testing-library/react"
 import { renderWithProviders } from "@/test/renderWithProviders"
-import LiveMarketPricesProvider from "@/providers/LiveMarketPricesProvider"
+import QuotesProvider from "@/providers/QuotesProvider"
 import type { FeaturedEvent } from "@/types"
 import EventCard from "./EventCard"
 
@@ -22,9 +22,9 @@ const liveEvent: FeaturedEvent = {
 
 const renderEventCard = (event: FeaturedEvent) =>
   renderWithProviders(
-    <LiveMarketPricesProvider marketIds={event.market ? [event.market.id] : []}>
+    <QuotesProvider marketIds={event.market ? [event.market.id] : []}>
       <EventCard event={event} />
-    </LiveMarketPricesProvider>,
+    </QuotesProvider>,
   )
 
 describe("EventCard", () => {

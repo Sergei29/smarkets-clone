@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui/badge"
 import { getEventViewModel } from "@/lib/event/getEventViewModel"
 import { toSmarketsError } from "@/lib/smarkets/errors"
 import MarketCard from "@/components/markets/MarketCard"
-import LiveMarketPricesProvider from "@/providers/LiveMarketPricesProvider"
 import QuotesUpdatingIndicator from "@/components/markets/QuotesUpdatingIndicator"
+import QuotesContextProvider from "@/providers/QuotesProvider"
+import QuotesStatusProvider from "@/providers/QuotesStatusProvider"
 import type { EventDetails } from "@/types"
 
 const EVENT_STATE_LABEL: Record<string, string> = {
@@ -83,7 +84,7 @@ const EventDetail = async ({ params }: Props) => {
   const marketIds = event.markets.map((market) => market.id)
 
   return (
-    <LiveMarketPricesProvider marketIds={marketIds}>
+    <QuotesContextProvider marketIds={marketIds}>
       <header className="mb-4 flex items-start justify-between gap-2">
         <div>
           <h1 className="text-2xl font-semibold">{event.name}</h1>
@@ -96,7 +97,9 @@ const EventDetail = async ({ params }: Props) => {
           )}
         </div>
         <div className="flex items-center gap-2">
-          <QuotesUpdatingIndicator />
+          <QuotesStatusProvider marketIds={marketIds}>
+            <QuotesUpdatingIndicator />
+          </QuotesStatusProvider>
           <Badge variant={event.state === "live" ? "default" : "secondary"}>
             {EVENT_STATE_LABEL[event.state] ?? event.state}
           </Badge>
@@ -123,7 +126,7 @@ const EventDetail = async ({ params }: Props) => {
           ))}
         </ul>
       )}
-    </LiveMarketPricesProvider>
+    </QuotesContextProvider>
   )
 }
 
