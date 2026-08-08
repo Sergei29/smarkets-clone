@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -40,6 +40,7 @@ const LoginForm = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get("callbackUrl") ?? "/"
+  const [isNavigating, startTransition] = useTransition()
   const [formError, setFormError] = useState<string | null>(null)
   const [passwordFieldType, setPasswordFieldType] = useState<
     "text" | "password"
@@ -64,9 +65,24 @@ const LoginForm = () => {
       return
     }
 
-    router.push(callbackUrl)
-    router.refresh()
+    /**
+     * `router.push` returns void and only *starts* the navigation, so
+     * `isSubmitting` would flip back to false while the destination's RSC
+     * payload is still in flight — briefly re-enabling the form on a page the
+     * user has already left. Wrapping it in a transition makes `isNavigating`
+     * stay true until the new route actually commits.
+     */
+    startTransition(() => {
+      router.push(callbackUrl)
+    })
   })
+
+  /**
+   * Covers both halves of the flow:
+   * - the credentials POST,
+   * - then the navigation.
+   */
+  const isBusy = isSubmitting || isNavigating
 
   const togglePasswordFieldType = () =>
     setPasswordFieldType((current) =>
@@ -122,8 +138,8 @@ const LoginForm = () => {
           />
         </Field>
 
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Signing in…" : "Sign in"}
+        <Button type="submit" disabled={isBusy}>
+          {isBusy ? "Signing in…" : "Sign in"}
         </Button>
       </FieldGroup>
     </form>

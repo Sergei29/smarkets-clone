@@ -4,7 +4,6 @@ import userEvent from "@testing-library/user-event"
 import LoginForm from "./LoginForm"
 
 const push = vi.fn()
-const refresh = vi.fn()
 const signIn = vi.fn()
 
 vi.mock("next-auth/react", () => ({
@@ -12,7 +11,7 @@ vi.mock("next-auth/react", () => ({
 }))
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push, refresh }),
+  useRouter: () => ({ push }),
   useSearchParams: () => new URLSearchParams(),
 }))
 
@@ -32,7 +31,6 @@ const fillAndSubmit = async (username: string, password: string) => {
 describe("LoginForm", () => {
   beforeEach(() => {
     push.mockReset()
-    refresh.mockReset()
     signIn.mockReset()
   })
 
@@ -57,7 +55,6 @@ describe("LoginForm", () => {
       redirect: false,
     })
     await waitFor(() => expect(push).toHaveBeenCalledWith("/"))
-    expect(refresh).toHaveBeenCalled()
   })
 
   it("shows an invalid-credentials message and does not redirect", async () => {
